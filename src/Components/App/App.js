@@ -1,4 +1,5 @@
 import './App.css';
+import history from '../../history.js';
 import NewsFeed from '../NewsFeed/NewsFeed.js';
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
@@ -16,7 +17,7 @@ class App extends Component {
   }
 
   About = () => {
-    return<>ABOUT ME PLACEHOLDER</>
+    return <div onClick={() => history.push('/')}>ABOUT ME PLACEHOLDER</div>
   }
 
   createSelect = (propName, displayText, btnData, ...options) => {
@@ -26,13 +27,15 @@ class App extends Component {
     }
     let optionsHTML = options.map( (option, i) => <option key={i} value={option}>{option}</option>)
     return (
-      <select
-        name={propName}
-        onChange={(e) => this.setState({[e.target.name]: e.target.value})}>
+      <div className='preferences'>
         {displayText}
-        {optionsHTML}
         {btnHTML}
-      </select>
+        <select
+          name={propName}
+          onChange={(e) => this.setState({[e.target.name]: e.target.value})}>
+          {optionsHTML}
+        </select>
+      </div>
     )
   }
 
@@ -52,11 +55,13 @@ class App extends Component {
         <h1>
           Show Me Something News
         </h1>
-        {this.createSelect('numPhrases', 'How many random phrases?', null, 1, 2, 3)}
-        {this.createSelect('minimumWords', 'Minimum words', null, 1, 2, 3, 4, 5)}
-        {this.createSelect('maximumWords', 'Maximum words', null, 1, 2, 3, 4, 5)}
+        <div className='search-preferences hidden'>
+          {this.createSelect('numPhrases', 'How many random phrases?', null, 1, 2, 3)}
+          {this.createSelect('minimumWords', 'Minimum words', null, 1, 2, 3, 4, 5)}
+          {this.createSelect('maximumWords', 'Maximum words', null, 1, 2, 3, 4, 5)}
+        </div>
         <button onClick={this.fetchArticles}>Go!</button>
-        {this.createSelect('sortBy', '---', btnData, 'Recent', 'Relevance', 'Length')}
+        {this.createSelect('sortBy', null, btnData, 'Recent', 'Relevance', 'Length')}
       </header>
     )
   }
@@ -66,7 +71,8 @@ class App extends Component {
       <>
         <this.Header />
         <NewsFeed />
-        <button>about</button>
+        <button onClick={() => history.push('/about')}>about</button>
+        
         <Route
           path='/about'
           component={this.About}

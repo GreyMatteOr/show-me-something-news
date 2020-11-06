@@ -1,7 +1,30 @@
-.App {
-  text-align: center;
+header {
+  display: grid;
+  width: 100%;
 }
 
+button {
+  background-color: rgba(150, 0, 0, 0.5);
+  border-radius: .5em;
+  transition-property: background-color;
+  transition-duration: .6s;
+  width: max-content;
+}
+
+select {
+  background-color: lightgrey;
+  border-color: black;
+  border-radius: .25em;
+  width: max-content;
+}
+
+button:hover {
+  background-color: rgba(185, 60, 60, 0.8);
+}
+
+.hidden {
+  display: none;
+}
 /* I like this spinning animation for reference
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
