@@ -1,4 +1,5 @@
 import './App.css';
+import NewsFeed from '../NewsFeed/NewsFeed.js';
 import React, { Component } from 'react';
 
 class App extends Component {

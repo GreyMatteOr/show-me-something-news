@@ -1,4 +1,4 @@
-import App from './App';
+import App from './Components/App/App.js';
 import history from './history.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
