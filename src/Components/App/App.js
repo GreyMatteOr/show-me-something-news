@@ -1,6 +1,7 @@
 import './App.css';
 import NewsFeed from '../NewsFeed/NewsFeed.js';
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -14,12 +15,16 @@ class App extends Component {
     }
   }
 
+  About = () => {
+    return<>ABOUT ME PLACEHOLDER</>
+  }
+
   createSelect = (propName, displayText, btnData, ...options) => {
     let btnHTML = <></>;
-    if (btnHTML) {
+    if (btnData) {
       btnHTML = <button onClick={btnData.onClick}>{btnData.text}</button>
     }
-    let optionsHTML = options.maps( (option, i) => <option key={i} value={option}>{option}</option>)
+    let optionsHTML = options.map( (option, i) => <option key={i} value={option}>{option}</option>)
     return (
       <select
         name={propName}
@@ -59,12 +64,12 @@ class App extends Component {
   render() {
     return (
       <>
-        <Header />
+        <this.Header />
         <NewsFeed />
         <button>about</button>
         <Route
           path='/about'
-          component={About}
+          component={this.About}
         />
       </>
     );
