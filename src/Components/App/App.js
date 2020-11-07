@@ -12,6 +12,7 @@ class App extends Component {
       numPhrases: 1,
       minimumWords: 1,
       maximumWords: 1,
+      showPreferences: false,
       sortBy: 'Recent'
     }
   }
@@ -48,18 +49,28 @@ class App extends Component {
   }
 
   Header = () => {
+    let preferencesClass = this.state.showPreferences ? 'search-preferences' : 'search-preferences hidden'
     return (
       <header
         data-testid='header'>
-        <h1>
-          Show Me Something News
-        </h1>
-        <div className='search-preferences hidden'>
+        <button
+          id='title-btn'
+          onClick={this.fetchArticles}>
+          <h1>
+            Show Me Something News
+          </h1>
+        </button>
+        <div className={preferencesClass}>
           {this.createSelect('numPhrases', 'How many random phrases?', null, 1, 2, 3)}
           {this.createSelect('minimumWords', 'Minimum words', null, 1, 2, 3, 4, 5)}
           {this.createSelect('maximumWords', 'Maximum words', null, 1, 2, 3, 4, 5)}
         </div>
-        <button onClick={this.fetchArticles}>Go!</button>
+        <button
+          id='show-preferences'
+          onClick={ () => this.setState({ showPreferences: !this.state.showPreferences })}
+          >
+          adjust preferences
+        </button>
       </header>
     )
   }
@@ -69,8 +80,10 @@ class App extends Component {
     return (
       <>
         <this.Header />
-        <NewsFeed />
-        {this.createSelect('sortBy', null, btnData, 'Recent', 'Relevance', 'Length')}
+        <main>
+          {this.createSelect('sortBy', null, btnData, 'Recent', 'Relevance', 'Length')}
+          <NewsFeed />
+        </main>
         <button onClick={() => history.push('/about')}>about</button>
 
         <Route
