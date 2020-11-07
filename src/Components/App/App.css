@@ -1,6 +1,19 @@
 header {
   display: grid;
+  grid-template-rows: 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr; */
+  justify-items: center;
   width: 100%;
+}
+
+h1 {
+  /* grid-column: 1 / span 2; */
+  grid-row: 1;
+  text-align: center;
+}
+
+header button, search-pre {
+  grid-row: 2;
 }
 
 button {
@@ -9,6 +22,7 @@ button {
   transition-property: background-color;
   transition-duration: .6s;
   width: max-content;
+  height: max-content;
 }
 
 select {

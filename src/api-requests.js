@@ -19,6 +19,20 @@ export const wordAPI = {
   }
 }
 
-export const timesAPI ={
+export const timesAPI = {
+  url: 'https://api.nytimes.com/svc/search/v2/articlesearch.json?',
+
+  key: '&api-key=L5x1jxc7BGK5GdsesCTan33ncRlP52P6',
+
+  getArticles(query) {
+    return fetch(url + `q=${query}` + key)
+    .then( response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return 'error';
+      }
+    });
+  }
 
 }

@@ -48,7 +48,6 @@ class App extends Component {
   }
 
   Header = () => {
-    let btnData = {text:'Sort By', onClick: this.sortArticles};
     return (
       <header
         data-testid='header'>
@@ -61,18 +60,19 @@ class App extends Component {
           {this.createSelect('maximumWords', 'Maximum words', null, 1, 2, 3, 4, 5)}
         </div>
         <button onClick={this.fetchArticles}>Go!</button>
-        {this.createSelect('sortBy', null, btnData, 'Recent', 'Relevance', 'Length')}
       </header>
     )
   }
 
   render() {
+    let btnData = {text:'Sort By', onClick: this.sortArticles};
     return (
       <>
         <this.Header />
         <NewsFeed />
+        {this.createSelect('sortBy', null, btnData, 'Recent', 'Relevance', 'Length')}
         <button onClick={() => history.push('/about')}>about</button>
-        
+
         <Route
           path='/about'
           component={this.About}
