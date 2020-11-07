@@ -18,21 +18,24 @@ export const wordAPI = {
     });
   },
 
-  async getPhrase(min, max, numWords, words = []) {
+  async getPhrase(min, max, numWords, data = []) {
     if (numWords === undefined) {
       let range = (max + .99) - min
       let rand =  Math.floor( Math.random() * range );
-      let numWords = min + rand;
+      numWords = min + rand;
     }
-    if (words.length === 0) {
-      data = await wordAPI.getRandomWord();
-      if (data = 'error') return 'error';
-      words = parseValues(data);
+    let words = [];
+    while (words.length < numWords) {
+      let randomI = Math.floor( Math.random() * 10);
+      while (data.length <= randomI) {
+        let newData = await wordAPI.getRandomWord();
+        if (newData === 'error') return 'error';
+        data = data.concat( wordAPI.parseValues(newData) );
+      }
+      words.push( data[randomI] );
+      data = data.slice(randomI + 1);
     }
-    let randomI = Math.floor( Math.random() * words.length);
-    let randomWord = [words[randomI]];
-    restOfWords = words.slice(randomI + 1);
-    return randomWord.concat(min, max, numWords - 1, restOfWords);
+    return words;
   },
 
   parseValues(data, type = typeof(data)) {
