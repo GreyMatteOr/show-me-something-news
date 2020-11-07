@@ -1,7 +1,7 @@
 export const wordAPI = {
   url: 'https://wordsapiv1.p.rapidapi.com/words/',
 
-  getRandom() {
+  getRandomWord() {
     return fetch(url + '?random=true', {
       method: 'GET',
       headers: {
@@ -16,6 +16,39 @@ export const wordAPI = {
         return 'error';
       }
     });
+  },
+
+  async getPhrase(min, max, numWords, data = []) {
+    if (numWords === undefined) {
+      let range = (max + .99) - min
+      let rand =  Math.floor( Math.random() * range );
+      numWords = min + rand;
+    }
+    let words = [];
+    while (words.length < numWords) {
+      let randomI = Math.floor( Math.random() * 10);
+      while (data.length <= randomI) {
+        let newData = await wordAPI.getRandomWord();
+        if (newData === 'error') return 'error';
+        data = data.concat( wordAPI.parseValues(newData) );
+      }
+      words.push( data[randomI] );
+      data = data.slice(randomI + 1);
+    }
+    return words;
+  },
+
+  parseValues(data, type = typeof(data)) {
+    if (Array.isArray(data)) {
+      return data.reduce( (output, element) => output.concat( String(element).split(' ') ), []);
+    }
+    if (type === 'object') {
+      let output = [];
+      Object.values(data).forEach( value => output = output.concat(wordAPI.parseValues(value)));
+      return output;
+    }
+    if (type === 'string') return data;
+    return [];
   }
 }
 
