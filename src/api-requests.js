@@ -33,15 +33,15 @@ export const wordAPI = {
     let randomWord = [words[randomI]];
     restOfWords = words.slice(randomI + 1);
     return randomWord.concat(min, max, numWords - 1, restOfWords);
-  }
+  },
 
   parseValues(data, type = typeof(data)) {
     if (Array.isArray(data)) {
-      return data.reduce( (output, element) => return output.concat(element.toString().split(' ')), []);
+      return data.reduce( (output, element) => output.concat( String(element).split(' ') ), []);
     }
     if (type === 'object') {
       let output = [];
-      Object.values.forEach( value => output.concat(wordAPI.parseValues(value)));
+      Object.values(data).forEach( value => output = output.concat(wordAPI.parseValues(value)));
       return output;
     }
     if (type === 'string') return data;
