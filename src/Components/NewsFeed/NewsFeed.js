@@ -9,7 +9,7 @@ class NewsFeed extends Component {
   }
 
   render() {
-      return <>PLACEHOLDER NewsFeed</>
+      return <div>PLACEHOLDER NewsFeed</div>
   }
 }
 

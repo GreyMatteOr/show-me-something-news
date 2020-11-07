@@ -1,7 +1,53 @@
-.App {
+header {
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  justify-items: center;
+  width: 100;
+  text-align:center;
+}
+
+#title-btn {
+  grid-row: 1;
   text-align: center;
 }
 
+#show-preferences {
+  grid-row: 2;
+}
+
+.search-preferences {
+  grid-row: 3;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  background-color: rgba(150, 0, 0, 0.5);
+  border-radius: .5em;
+  transition-property: background-color;
+  transition-duration: .6s;
+  width: max-content;
+  height: max-content;
+}
+
+select {
+  background-color: lightgrey;
+  border-color: black;
+  border-radius: .25em;
+  width: max-content;
+}
+
+button:hover {
+  background-color: rgba(185, 60, 60, 0.8);
+}
+
+.hidden {
+  display: none;
+}
 /* I like this spinning animation for reference
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
