@@ -57,8 +57,8 @@ export const timesAPI = {
 
   key: '&api-key=L5x1jxc7BGK5GdsesCTan33ncRlP52P6',
 
-  getArticles(query) {
-    return fetch(timesAPI.url + `q=${query}` + timesAPI.key)
+  getArticles(query, page = 0) {
+    return fetch(timesAPI.url + `q=${query}` + timesAPI.key + `&page=${page}`)
     .then( response => {
       if (response.ok) {
         return response.json();
