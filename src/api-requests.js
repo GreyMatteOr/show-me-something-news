@@ -2,7 +2,7 @@ export const wordAPI = {
   url: 'https://wordsapiv1.p.rapidapi.com/words/',
 
   getRandomWord() {
-    return fetch(url + '?random=true', {
+    return fetch(wordAPI.url + '?random=true', {
       method: 'GET',
       headers: {
         "x-rapidapi-key": "7db29738cbmsh471ad5d986747b7p1cb45ajsnfd84ea900f54",
@@ -58,7 +58,7 @@ export const timesAPI = {
   key: '&api-key=L5x1jxc7BGK5GdsesCTan33ncRlP52P6',
 
   getArticles(query) {
-    return fetch(url + `q=${query}` + key)
+    return fetch(timesAPI.url + `q=${query}` + timesAPI.key)
     .then( response => {
       if (response.ok) {
         return response.json();
@@ -67,5 +67,4 @@ export const timesAPI = {
       }
     });
   }
-
 }
