@@ -1,3 +1,4 @@
+import history from '../../history.js';
 import loading from '../../images/loading.png';
 import NewsCard from '../NewsCard/NewsCard.js';
 import './NewsFeed.css';
@@ -9,6 +10,7 @@ class NewsFeed extends Component {
     super(props);
     this.state = {
       articles: [],
+      currentPage: this.props.currentPage,
       isError: false,
       isLoading: true,
       loadingOverlayState: 'hidden',
@@ -17,12 +19,16 @@ class NewsFeed extends Component {
   }
 
   componentDidMount() {
-    this.changePage({target:{value:0}});
+    this.loadArticle(this.props.queryWords, this.state.currentPage);
   }
 
-  changePage = (e) => {
+  componentWillReceiveProps(next) {
+    this.loadArticle(next.queryWords, next.currentPage);
+  }
+
+  loadArticle(query, page) {
     this.setState( {loadingOverlayState: 'shown'} )
-    timesAPI.getArticles('Apple Banana Kiwi', e.target.value)
+    timesAPI.getArticles(query, page - 1)
     .then( data => {
       if (data === 'error') {
         return this.setState( {isError: true} )
@@ -33,7 +39,9 @@ class NewsFeed extends Component {
       newState.loadingOverlayState = 'hidden';
       this.setState(newState);
     })
-    .catch( () => this.setState( {isError: true} ))
+    .catch( (e) => {
+      this.setState( {isError: true} )
+    })
   }
 
   NewsCards = () => {
@@ -51,15 +59,16 @@ class NewsFeed extends Component {
   PageSelect = () => {
     let optionsHTML = [];
     while (optionsHTML.length < this.state.pageMax) {
-      let pos = optionsHTML.length;
-      optionsHTML.push(<option key={pos} value={pos}>{pos + 1}</option>)
+      let pos = optionsHTML.length + 1;
+      optionsHTML.push(<option key={pos} value={pos}>{pos}</option>)
     }
 
     return (
       <div className='page-selection'>
         current page
         <select
-          onChange={this.changePage}>
+          defaultValue={this.props.currentPage}
+          onChange={(this.props.changePage)}>
           {optionsHTML}
         </select>
       </div>

@@ -1,2 +1,4 @@
 import {createBrowserHistory} from 'history';
-export default createBrowserHistory();
+const history = createBrowserHistory();
+history.id = Math.floor( Math.random() * 10000);
+export default history;
