@@ -1,33 +1,35 @@
 import './App.css';
-import history from '../../history.js';
+import loading from '../../images/loading.png';
 import NewsFeed from '../NewsFeed/NewsFeed.js';
 import React, { Component } from 'react';
-import { Route, Router, Switch } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
+import { NavLink, Route, Router } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
     super (props);
     this.state = {
-      currentPage: 1,
       numPhrases: 1,
+      isError: false,
+      loadingOverlayState: 'shown',
       minimumWords: 1,
       maximumWords: 1,
+      pageMax: 1,
+      query: 'apple banana kiwi',
       showPreferences: false,
       sortBy: 'Recent'
     }
   }
 
   About = () => {
-    return <div onClick={() => history.push('/')}>ABOUT ME PLACEHOLDER</div>
+    return (
+      <NavLink to='/'>
+        <div>ABOUT ME PLACEHOLDER</div>
+      </NavLink>
+    )
   }
 
-  changePage = (e) => {
-    e.preventDefault();
-    let newPage = e.target.value
-    history.push(`/page/${newPage}`)
-    this.setState({currentPage: newPage});
-    history.go(0)
+  changePage = (pageNum) => {
+    this.setState( {currentPage: pageNum, doChange: true} )
   }
 
   createSelect = (propName, displayText, btnData, ...options) => {
@@ -84,13 +86,13 @@ class App extends Component {
     )
   }
 
-  Home = (props) => {
+  Home = () => {
     return (
       <NewsFeed
-        key={1}
-        changePage={this.changePage}
         currentPage={1}
-        queryWords='Apple Banana Kiwi'
+        isError={this.state.isError}
+        query={this.state.query}
+        setAppState={this.setAppState}
       />
     )
   }
@@ -98,12 +100,38 @@ class App extends Component {
   OffsetPage = (props) => {
     return (
       <NewsFeed
-        key={props.match.params.pageName}
-        changePage={this.changePage}
-        currentPage={props.match.params.pageName}
-        queryWords='Apple Banana Kiwi'
+        currentPage={props.match.params.pageNum}
+        isError={this.state.isError}
+        query={this.state.query}
+        setAppState={this.setAppState}
       />
     )
+  }
+
+  PageSelect = (props) => {
+    let optionsHTML = [];
+    while (optionsHTML.length < props.pageMax) {
+      let pageNum = optionsHTML.length + 1;
+      optionsHTML.push(
+        <NavLink
+          to={`/page/${pageNum}`}
+          key={pageNum}>
+          <button onClick={ () => this.changePage(pageNum) }>
+            {pageNum}
+          </button>
+        </NavLink>
+      )
+    }
+
+    return (
+      <div className='page-selection'>
+          {optionsHTML}
+      </div>
+    )
+  }
+
+  setAppState = (state) => {
+    this.setState(state);
   }
 
   render() {
@@ -113,28 +141,37 @@ class App extends Component {
         <this.Header />
         <main>
           {this.createSelect('sortBy', null, btnData, 'Recent', 'Relevance', 'Oldest')}
-          <Switch>
-            <Route
-              exact path='/'
-              component={this.Home}
+          <this.PageSelect pageMax={this.state.pageMax}/>
+          <div className={this.state.loadingOverlayState}>
+            <img
+              className='spin'
+              src={loading}
+              alt='Loading Content'
             />
+          </div>
 
-            <Route
-              exact path='/page/:pageName'
-              component={this.OffsetPage}
-            />
+          <Route
+            exact path='/'
+            component={this.Home}
+          />
 
-            <Route
-              path='/about'
-              component={this.About}
-            />
-          </Switch>
+          <Route
+            exact path='/page/:pageNum'
+            component={this.OffsetPage}
+          />
+
+          <Route
+            path='/about'
+            component={this.About}
+          />
         </main>
-        <button onClick={() => history.push('/about')}>about</button>
+        <NavLink to='/about'>
+          <button>about</button>
+        </NavLink>
 
       </>
     );
   }
 }
 
-export default withRouter(App);
+export default App;

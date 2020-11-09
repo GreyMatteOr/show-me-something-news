@@ -20,9 +20,9 @@ export const wordAPI = {
 
   async getPhrase(min, max, numWords, data = []) {
     if (numWords === undefined) {
-      let range = (max + .99) - min
+      let range = (+max + .99) - +min
       let rand =  Math.floor( Math.random() * range );
-      numWords = min + rand;
+      numWords = +min + rand;
     }
     let words = [];
     while (words.length < numWords) {
@@ -40,14 +40,14 @@ export const wordAPI = {
 
   parseValues(data, type = typeof(data)) {
     if (Array.isArray(data)) {
-      return data.reduce( (output, element) => output.concat( String(element).split(' ') ), []);
+      return data.reduce( (output, element) => output.concat( wordAPI.parseValues(element) ), []);
     }
     if (type === 'object') {
       let output = [];
       Object.values(data).forEach( value => output = output.concat(wordAPI.parseValues(value)));
       return output;
     }
-    if (type === 'string') return data;
+    if (type === 'string') return data.split(' ');
     return [];
   }
 }
