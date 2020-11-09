@@ -14,8 +14,7 @@ class App extends Component {
       isLoading: true,
       loadingOverlayState: 'shown',
       mightSortBy: 'relevance',
-      minimumWords: 1,
-      maximumWords: 1,
+      numWords: 1,
       pageMax: 1,
       query: null,
       showPreferences: false,
@@ -38,11 +37,11 @@ class App extends Component {
   createSelect = (propName, displayText, btnData, ...options) => {
     let btnHTML = <></>;
     if (btnData) {
-      btnHTML = <button onClick={btnData.onClick}>{btnData.text}</button>
+      btnHTML = <button id='select-btn' onClick={btnData.onClick}>{btnData.text}</button>
     }
     let optionsHTML = options.map( (option, i) => <option key={i} value={option}>{option}</option>)
     return (
-      <div className='preferences'>
+      <div className='preferences-select'>
         {displayText}
         {btnHTML}
         <select
@@ -55,14 +54,15 @@ class App extends Component {
   }
 
   getNewPhrase = () => {
-    wordAPI.getPhrase(this.state.minimumWords, this.state.maximumWords)
-    .then( words => {
-      if (words === 'error') {
-        return this.setState( {isError: true, isLoading: false} )
-      }
-      this.setState( {query: words.join(' '), currentPage: 1, isLoading: false} )
-    })
-    .catch( () => this.setState( {isError: true, isLoading: false} ))
+    // wordAPI.getPhrase(this.state.numWords)
+    // .then( words => {
+    //   if (words === 'error') {
+    //     return this.setState( {isError: true, isLoading: false} )
+    //   }
+    //   this.setState( {query: words.join(' '), currentPage: 1, isLoading: false} )
+    // })
+    // .catch( () => this.setState( {isError: true, isLoading: false} ))
+    this.setState({query: 'Apple Banana Kiwi', currentPage: 1, isLoading: false})
   }
 
   setSort = () => {
@@ -82,16 +82,17 @@ class App extends Component {
           </h1>
         </button>
         <h2>{`...about: "${this.state.query}`}"</h2>
-        <div className={preferencesClass}>
-          {this.createSelect('minimumWords', 'Minimum words', null, 1, 2, 3, 4, 5)}
-          {this.createSelect('maximumWords', 'Maximum words', null, 1, 2, 3, 4, 5)}
-        </div>
-        <button
-          id='show-preferences'
-          onClick={ () => this.setState({ showPreferences: !this.state.showPreferences })}
-          >
-          adjust preferences
-        </button>
+        <section className='preferences'>
+          <div className={preferencesClass}>
+            {this.createSelect('numWords', 'words per phrase', null, 1, 2, 3, 4, 5)}
+          </div>
+          <button
+            id='show-preferences'
+            onClick={ () => this.setState({ showPreferences: !this.state.showPreferences })}
+            >
+            adjust preferences
+          </button>
+        </section>
       </header>
     )
   }

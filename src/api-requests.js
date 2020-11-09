@@ -18,12 +18,7 @@ export const wordAPI = {
     });
   },
 
-  async getPhrase(min, max, numWords, data = []) {
-    if (numWords === undefined) {
-      let range = (+max + .99) - +min
-      let rand =  Math.floor( Math.random() * range );
-      numWords = +min + rand;
-    }
+  async getPhrase(numWords, data = []) {
     let words = [];
     while (words.length < numWords) {
       let randomI = Math.floor( Math.random() * 10);
