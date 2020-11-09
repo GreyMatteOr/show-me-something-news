@@ -3,6 +3,7 @@ import loading from '../../images/loading.png';
 import NewsFeed from '../NewsFeed/NewsFeed.js';
 import React, { Component } from 'react';
 import { NavLink, Route, Router } from 'react-router-dom';
+import {wordAPI} from '../../api-requests.js';
 
 class App extends Component {
   constructor(props) {
@@ -14,10 +15,14 @@ class App extends Component {
       minimumWords: 1,
       maximumWords: 1,
       pageMax: 1,
-      query: 'apple banana kiwi',
+      query: '...',
       showPreferences: false,
       sortBy: 'Recent'
     }
+  }
+
+  componentDidMount() {
+    this.getNewPhrase();
   }
 
   About = () => {
@@ -26,10 +31,6 @@ class App extends Component {
         <div>ABOUT ME PLACEHOLDER</div>
       </NavLink>
     )
-  }
-
-  changePage = (pageNum) => {
-    this.setState( {currentPage: pageNum, doChange: true} )
   }
 
   createSelect = (propName, displayText, btnData, ...options) => {
@@ -51,8 +52,15 @@ class App extends Component {
     )
   }
 
-  fetchArticles = () => {
-    console.log('PlaceHolder. Find phrases:', this.state.numPhrases, `with ${this.state.minimumWords}-${this.state.maximumWords} words each`)
+  getNewPhrase = () => {
+    wordAPI.getPhrase(this.state.minimumWords, this.state.maximumWords)
+    .then( words => {
+      if (words === 'error') {
+        return this.setState( {isError: true} )
+      }
+      this.setState( {query: words.join(' '), currentPage: 1} )
+    })
+    .catch( () => this.setState( {isError: true} ))
   }
 
   sortArticles = () => {
@@ -66,13 +74,13 @@ class App extends Component {
         data-testid='header'>
         <button
           id='title-btn'
-          onClick={this.fetchArticles}>
+          onClick={this.getNewPhrase}>
           <h1>
             Show Me Something News
           </h1>
         </button>
+        <h2>{`...about: "${this.state.query}`}"</h2>
         <div className={preferencesClass}>
-          {this.createSelect('numPhrases', 'How many random phrases?', null, 1, 2, 3)}
           {this.createSelect('minimumWords', 'Minimum words', null, 1, 2, 3, 4, 5)}
           {this.createSelect('maximumWords', 'Maximum words', null, 1, 2, 3, 4, 5)}
         </div>
@@ -135,6 +143,18 @@ class App extends Component {
   }
 
   render() {
+    if (this.query === '...') {
+      return (
+        <div className='shown'>
+          <img
+            className='spin'
+            src={loading}
+            alt='Loading Content'
+          />
+        </div>
+      )
+    }
+
     let btnData = {text:'Sort By', onClick: this.sortArticles};
     return (
       <>
