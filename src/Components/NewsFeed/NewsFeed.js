@@ -15,35 +15,37 @@ class NewsFeed extends Component {
 
   componentDidMount() {
     if (!this.props.isError) {
-      this.getArticles(this.props.query, this.props.currentPage)
+      this.getArticles(this.props.query, this.props.currentPage, this.props.sort)
     }
   }
 
   componentWillReceiveProps(next) {
     let queryChange = next.query !== this.props.query;
     let pageChange = next.currentPage !== this.props.currentPage;
+    let sortChange = next.sort !== this.props.sort;
     let valid = !this.props.isError;
-    if ( valid && (queryChange || pageChange) ) {
-      this.getArticles(next.query, next.currentPage);
+    if ( valid && (queryChange || pageChange || sortChange) ) {
+      this.getArticles(next.query, next.currentPage, next.sort);
     }
   }
 
-  getArticles(query, page) {
+  getArticles(query, page, sort) {
     this.props.setAppState( {loadingOverlayState: 'shown'} )
-    timesAPI.getArticles(query, page - 1)
+    timesAPI.getArticles(query, page - 1, sort)
     .then( data => {
       if (data === 'error') {
-        return this.setState( {isError: true, loadingOverlayState: 'hidden'} )
+        return this.setState( {isError: true, isLoading: false, loadingOverlayState: 'hidden'} )
       }
       this.setState( {articles: data.response.docs} )
       this.props.setAppState( {
         isError: false,
+        isLoading: false,
         loadingOverlayState: 'hidden',
         pageMax: Math.min( Math.ceil(data.response.meta.hits / 10), 100)
       } )
     })
     .catch( () => {
-      this.props.setAppState( {isError: true, loadingOverlayState: 'hidden'} )
+      this.props.setAppState( {isError: true, isLoading: false, loadingOverlayState: 'hidden'} )
     })
   }
 

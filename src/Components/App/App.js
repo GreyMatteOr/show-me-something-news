@@ -2,7 +2,7 @@ import './App.css';
 import loading from '../../images/loading.png';
 import NewsFeed from '../NewsFeed/NewsFeed.js';
 import React, { Component } from 'react';
-import { NavLink, Route, Router } from 'react-router-dom';
+import { NavLink, Route} from 'react-router-dom';
 import {wordAPI} from '../../api-requests.js';
 
 class App extends Component {
@@ -11,13 +11,15 @@ class App extends Component {
     this.state = {
       numPhrases: 1,
       isError: false,
+      isLoading: true,
       loadingOverlayState: 'shown',
+      mightSortBy: 'relevance',
       minimumWords: 1,
       maximumWords: 1,
       pageMax: 1,
-      query: '...',
+      query: null,
       showPreferences: false,
-      sortBy: 'Recent'
+      sortBy: 'relevance'
     }
   }
 
@@ -56,15 +58,15 @@ class App extends Component {
     wordAPI.getPhrase(this.state.minimumWords, this.state.maximumWords)
     .then( words => {
       if (words === 'error') {
-        return this.setState( {isError: true} )
+        return this.setState( {isError: true, isLoading: false} )
       }
-      this.setState( {query: words.join(' '), currentPage: 1} )
+      this.setState( {query: words.join(' '), currentPage: 1, isLoading: false} )
     })
-    .catch( () => this.setState( {isError: true} ))
+    .catch( () => this.setState( {isError: true, isLoading: false} ))
   }
 
-  sortArticles = () => {
-    console.log('PlaceHolder. Sort By:', this.state.sortBy);
+  setSort = () => {
+    this.setState({sort: this.state.mightSortBy});
   }
 
   Header = () => {
@@ -101,8 +103,9 @@ class App extends Component {
         isError={this.state.isError}
         query={this.state.query}
         setAppState={this.setAppState}
+        sort={this.state.sort}
       />
-    )
+    );
   }
 
   OffsetPage = (props) => {
@@ -112,6 +115,7 @@ class App extends Component {
         isError={this.state.isError}
         query={this.state.query}
         setAppState={this.setAppState}
+        sort={this.state.sort}
       />
     )
   }
@@ -143,7 +147,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.query === '...') {
+    if (this.state.isLoading) {
       return (
         <div className='shown'>
           <img
@@ -155,12 +159,12 @@ class App extends Component {
       )
     }
 
-    let btnData = {text:'Sort By', onClick: this.sortArticles};
+    let btnData = {text:'Sort By', onClick: this.setSort};
     return (
       <>
         <this.Header />
         <main>
-          {this.createSelect('sortBy', null, btnData, 'Recent', 'Relevance', 'Oldest')}
+          {this.createSelect('mightSortBy', null, btnData, 'relevance', 'newest', 'oldest')}
           <this.PageSelect pageMax={this.state.pageMax}/>
           <div className={this.state.loadingOverlayState}>
             <img
