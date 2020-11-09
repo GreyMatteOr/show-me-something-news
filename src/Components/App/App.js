@@ -124,7 +124,7 @@ class App extends Component {
         <NavLink
           to={`/page/${pageNum}`}
           key={pageNum}>
-          <button onClick={ () => this.changePage(pageNum) }>
+          <button>
             {pageNum}
           </button>
         </NavLink>
