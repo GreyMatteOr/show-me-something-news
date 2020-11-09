@@ -150,7 +150,7 @@ class App extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <div className='shown'>
+        <div className='on-load-spin'>
           <img
             className='spin'
             src={loading}
@@ -175,6 +175,8 @@ class App extends Component {
             />
           </div>
 
+          <button onClick={ () => this.setState( {showAbout: !this.state.showAbout} ) }>about</button>
+
           <Route
             exact path='/'
             component={this.Home}
@@ -190,10 +192,6 @@ class App extends Component {
             component={this.About}
           />
         </main>
-        <NavLink to='/about'>
-          <button>about</button>
-        </NavLink>
-
       </>
     );
   }

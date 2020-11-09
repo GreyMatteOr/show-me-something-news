@@ -87,7 +87,7 @@ select {
   font-size: 16px;
 }
 
-.shown {
+.shown, .on-load-spin {
   top: 0;
   bottom: 0;
   left: 0;
@@ -97,6 +97,10 @@ select {
   display: flex;
   position: fixed;
   z-index: 100;
+}
+
+.shown {
+  background-color: rgba(50, 50, 50, .3);
 }
 
 .shown img {

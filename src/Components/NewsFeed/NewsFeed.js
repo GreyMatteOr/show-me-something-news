@@ -37,7 +37,7 @@ class NewsFeed extends Component {
       if (data === 'error') {
         return this.setState( {isError: true, isLoading: false, loadingOverlayState: 'hidden'} )
       }
-      this.setState( {articles: data.response.docs} )
+      this.setState( {articles: data.response.docs || [null]} )
       this.props.setAppState( {
         isError: false,
         isLoading: false,
@@ -67,7 +67,7 @@ class NewsFeed extends Component {
       return <h3>Looks like something went wrong! Refresh the page to try again.</h3>
     }
 
-    if (this.state.articles.length === 0) {
+    if (this.state.articles[0] === null) {
       return <h3>Looks like '{this.props.query}' didn't turn up any results. Hit the 'Show Me Something News' button to try again. Increasing the number of words to generate may also help!</h3>
     }
 
