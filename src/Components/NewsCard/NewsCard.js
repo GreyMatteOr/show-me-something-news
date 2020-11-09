@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import newspaper from '../../images/newspaper.png';
+import PropTypes from 'prop-types';
 import './NewsCard.css';
 
 function NewsCard({ article } ) {
@@ -46,6 +47,10 @@ function NewsCard({ article } ) {
       </section>
     </Link>
   )
+}
+
+NewsCard.propTypes = {
+  article: PropTypes.object
 }
 
 export default NewsCard;

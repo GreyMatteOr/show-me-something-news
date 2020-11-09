@@ -1,5 +1,6 @@
 import NewsCard from '../NewsCard/NewsCard.js';
 import './NewsFeed.css';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {timesAPI} from '../../api-requests.js';
 
@@ -66,8 +67,20 @@ class NewsFeed extends Component {
       return <h3>Looks like something went wrong! Refresh the page to try again.</h3>
     }
 
+    if (this.state.articles.length === 0) {
+      return <h3>Looks like '{this.props.query}' didn't turn up any results. Hit the 'Show Me Something News' button to try again. Increasing the number of words to generate may also help!</h3>
+    }
+
     return <this.NewsCards articles={this.state.articles}/>
   }
+}
+
+NewsFeed.propTypes = {
+  currentPage: PropTypes.number,
+  inError: PropTypes.bool,
+  query: PropTypes.string,
+  setAppState: PropTypes.func,
+  sort: PropTypes.string
 }
 
 export default NewsFeed;

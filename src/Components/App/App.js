@@ -111,7 +111,7 @@ class App extends Component {
   OffsetPage = (props) => {
     return (
       <NewsFeed
-        currentPage={props.match.params.pageNum}
+        currentPage={+props.match.params.pageNum}
         isError={this.state.isError}
         query={this.state.query}
         setAppState={this.setAppState}
