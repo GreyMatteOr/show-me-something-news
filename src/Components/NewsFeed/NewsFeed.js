@@ -14,11 +14,16 @@ class NewsFeed extends Component {
   }
 
   componentDidMount() {
-    this.getArticles(this.props.query, this.props.currentPage)
+    if (!this.props.isError) {
+      this.getArticles(this.props.query, this.props.currentPage)
+    }
   }
 
   componentWillReceiveProps(next) {
-    if ( next.query !== this.props.query || next.currentPage !== this.props.currentPage ) {
+    let queryChange = next.query !== this.props.query;
+    let pageChange = next.currentPage !== this.props.currentPage;
+    let valid = !this.props.isError;
+    if ( valid && (queryChange || pageChange) ) {
       this.getArticles(next.query, next.currentPage);
     }
   }

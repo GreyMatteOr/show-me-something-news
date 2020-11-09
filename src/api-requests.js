@@ -39,15 +39,42 @@ export const wordAPI = {
   },
 
   parseValues(data, type = typeof(data)) {
+
+    if(data === undefined || data === null) return [];
+
     if (Array.isArray(data)) {
-      return data.reduce( (output, element) => output.concat( wordAPI.parseValues(element) ), []);
+      return data.reduce( (output, element) => {
+        return output.concat( wordAPI.parseValues(element) )
+      }, []);
     }
+
     if (type === 'object') {
       let output = [];
-      Object.values(data).forEach( value => output = output.concat(wordAPI.parseValues(value)));
+      Object.entries(data).forEach( entry => {
+        if (entry[0] !== 'pronunciation') output = output.concat(wordAPI.parseValues(entry[1]))
+      });
       return output;
     }
-    if (type === 'string') return data.split(' ');
+
+    if (type === 'string') {
+      return data.split(' ')
+      .filter(word => {
+        let tooShort = word.length <= 3;
+        let isForbidden = [
+          'adjective',
+          'adverb',
+          'article',
+          'conjunction',
+          'determiner',
+          'interjection',
+          'noun',
+          'preposition',
+          'pronoun',
+          'verb'
+        ];
+        return !tooShort && !isForbidden.includes(word);
+      });
+    }
     return [];
   }
 }
