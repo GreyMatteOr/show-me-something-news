@@ -32,7 +32,7 @@ class NewsFeed extends Component {
       }
       this.setState( {articles: data.response.docs} )
       this.props.setAppState( {
-        loadingOverlayState: 'hidden',
+        isError: false,
         loadingOverlayState: 'hidden',
         pageMax: Math.min( Math.ceil(data.response.meta.hits / 10), 100)
       } )
@@ -42,8 +42,8 @@ class NewsFeed extends Component {
     })
   }
 
-  NewsCards = () => {
-    let uniqueArticles = this.state.articles.reduce( (unique, article ) => {
+  NewsCards = (props) => {
+    let uniqueArticles = props.articles.reduce( (unique, article ) => {
       let isNew = unique.every( inside => inside.web_url !== article.web_url );
       if (isNew) unique.push(article);
       return unique;
@@ -59,7 +59,7 @@ class NewsFeed extends Component {
       return <h3>Looks like something went wrong! Refresh the page to try again.</h3>
     }
 
-    return <this.NewsCards />
+    return <this.NewsCards articles={this.state.articles}/>
   }
 }
 
