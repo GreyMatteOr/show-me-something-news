@@ -59,6 +59,41 @@ main {
   align-items: center;
 }
 
+.about-overlay {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;
+  text-align: center;
+
+  background-color: rgba(0, 0, 0, .75);
+  opacity: 0;
+
+  transition-property: opacity;
+  transition-duration: .8s;
+}
+
+.about-show {
+  z-index: 100;
+  opacity: 1;
+}
+
+.about-holder {
+  margin: auto;
+  margin-top: 3em;
+  width: 70%;
+  padding: 3em;
+
+  background-color: rgba(255, 200, 200, .9);
+  border-radius: 1em;
+}
+
+.about-text {
+  font-size: 20px;
+}
+
 button {
   background-color: rgba(150, 0, 0, 0.5);
   color: rgb(255, 200, 0);

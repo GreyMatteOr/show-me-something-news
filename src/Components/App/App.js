@@ -17,6 +17,7 @@ class App extends Component {
       numWords: 1,
       pageMax: 1,
       query: null,
+      showAbout: false,
       showPreferences: false,
       sortBy: 'relevance'
     }
@@ -26,11 +27,24 @@ class App extends Component {
     this.getNewPhrase();
   }
 
-  About = () => {
+  About = (props) => {
     return (
-      <NavLink to='/'>
-        <div>ABOUT ME PLACEHOLDER</div>
-      </NavLink>
+      <div
+        className={props.disp}
+        onClick={ () => this.setState( {showAbout: !this.state.showAbout} ) }>
+        <div className='about-holder'>
+          <h4 className='about-text'>About Show Me Something News</h4>
+          <p className='about-text'>
+            Many people these days are concerned about how they are served the media they are consuming. There are algorithms in charge of curating content on most of the popular social media sites. On the surface, this doesn't seem terrible. However, it has recently come to light that there are some terrible repurcussions to the current way mass-media is provided. To those that would experiment with a life outside of intentional media seeking you out, Show Me Something News is a means of accessing high-quality articles from the New York Times but for randomly-generated topics.
+          </p>
+          <p className='about-text'>
+            By default, a single random word is generated at random. From there, articles about this topic are fetched and displayed. Single-word queries typically provide a smaller, but more focused and predictable result. To increase complexity, merely increase the number of search-terms in the preferences. The phrase will not be completely random, as the words will be moderately related.
+          </p>
+          <p className='about-text'>
+            The words are generated using <a href='https://www.wordsapi.com'>WORDSAPI</a> and <a href='https://developers.nytimes.com'>NYTAPI</a>. If you're curious about the developer, please check out <a href='https://github.com/greymatteor'>my GitHub profile</a>.
+          </p>
+        </div>
+      </div>
     )
   }
 
@@ -164,9 +178,11 @@ class App extends Component {
     }
 
     let btnData = {text:'Sort By', onClick: this.setSort};
+    let showAbout = this.state.showAbout ? 'about-show' : '';
     return (
       <>
         <this.Header />
+        <this.About disp={`about-overlay ${showAbout}`} />
         <main>
           {this.createSelect('mightSortBy', null, btnData, 'relevance', 'newest', 'oldest')}
           <this.PageSelect pageMax={this.state.pageMax}/>
