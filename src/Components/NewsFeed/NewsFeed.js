@@ -71,7 +71,9 @@ class NewsFeed extends Component {
       return <h3>Looks like '{this.props.query}' didn't turn up any results. Hit the 'Show Me Something News' button to try again. Increasing the number of words to generate may also help!</h3>
     }
 
-    return <this.NewsCards articles={this.state.articles}/>
+    return <section data-testid='newsfeed'>
+      <this.NewsCards articles={this.state.articles}/>
+    </section>
   }
 }
 
