@@ -194,7 +194,7 @@ class App extends Component {
           </div>
 
           <Route
-            exactpath='/show-me-something-news'
+            exact path='/show-me-something-news'
             component={this.Home}
           />
 
