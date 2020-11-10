@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# Show Me Something News
+## A Project by [Matthew Lane](https://github.com/GreyMatteOr) built from scratch in under 5 days
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
 
-## Available Scripts
+Many people these days are concerned about how they are served the media they are consuming. There are algorithms in charge of curating content on most of the popular social media sites. On the surface, this doesn't seem terrible. However, it has recently come to light that there are some terrible repurcussions to the current way mass-media is provided. To those that would experiment with a life outside of intentional media seeking you out, Show Me Something News is a means of accessing high-quality articles from the New York Times but for randomly-generated topics.
 
-In the project directory, you can run:
+By default, a single random word is generated at random. From there, articles about this topic are fetched and displayed. Single-word queries typically provide a smaller, but more focused and predictable result. To increase complexity, merely increase the number of search-terms in the preferences. The phrase will not be completely random, as the words will be moderately related.
 
-### `npm start`
+The words are generated using <a href='https://www.wordsapi.com'>WORDSAPI</a> and <a href='https://developers.nytimes.com'>NYTAPI</a>.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to use
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Please visit the Show Me Something News [deployed site](https://greymatteor.github.io/show-me-something-news) in your browser. Once there, it will automatically load the page with content from the NYT. If you like to get different content, hit the `Show Me Something News` button in the top left. It is possible to add words to the search phrase by hitting the `adjust preferences` button and modifying the words to show.
 
-### `npm test`
+It is possible to sort results by recency, relevancy, or chronologically by scrolling to the appropriate sort and hitting the button. Once you are satisfied with the search terms, clicking through the pages will show you all your results.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Tech-used
 
-### `npm run build`
+- React
+- JS
+- CSS
+- HTML
+- WORDSAPI
+- NYT-API
+- Jest
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### NOTES
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Since this website is using free API's, it occasionally times out if there are too many requests to the API's. Since it is a proof-of-concept, it will not be upgraded. Please consider this when you use it, and if you encounter this problem, please wait apprimately 1 minute and try again.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
