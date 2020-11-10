@@ -171,6 +171,7 @@ class App extends Component {
             className='spin'
             src={loading}
             alt='Loading Content'
+            data-testid='on-load-icon'
           />
         </div>
       )
@@ -185,7 +186,7 @@ class App extends Component {
         <main>
           {this.createSelect('mightSortBy', null, btnData, 'relevance', 'newest', 'oldest')}
           <this.PageSelect pageMax={this.state.pageMax}/>
-          <div className={this.state.loadingOverlayState}>
+          <div className={this.state.loadingOverlayState} data-testid='pre-feed-load'>
             <img
               className='spin'
               src={loading}
@@ -201,11 +202,6 @@ class App extends Component {
           <Route
             exact path='/page/:pageNum'
             component={this.OffsetPage}
-          />
-
-          <Route
-            path='/about'
-            component={this.About}
           />
         </main>
       </>
