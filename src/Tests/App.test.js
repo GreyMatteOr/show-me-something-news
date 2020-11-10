@@ -55,22 +55,6 @@ describe( 'App', () => {
     expect(screen.getByTestId('on-load-icon')).toBeInTheDocument();
   });
 
-  it( 'should load a loading image for the newsfeed after fetchin a search phrase', async () => {
-
-    history.push('/show-me-something-news')
-    render(<Router history={history} ><App /></Router>);
-
-    await waitFor( () => expect(wordAPI.getPhrase).toBeCalledTimes(1))
-
-    let loading = screen.getByTestId('pre-feed-load');
-
-    expect(screen.getByTestId('header')).toBeInTheDocument();
-    expect(screen.getByText('...about: "apple banana kiwi"'))
-    expect(loading.classList.toggle('shown')).toEqual(true)
-
-
-  });
-
   it( 'should load a newsfeed after fetching the articles', async () => {
     history.push('/show-me-something-news')
     render(<Router history={history} ><App /></Router>);
@@ -81,7 +65,7 @@ describe( 'App', () => {
     expect(screen.getByTestId('newsfeed')).toBeInTheDocument();
   });
 
-  it( 'should navigate to a new page after a user clicks on page button', async () => {
+  it( 'should navigate to a new page after a user clicks on page-buttons', async () => {
     history.push('/show-me-something-news')
     render(<Router history={history} ><App /></Router>);
 
@@ -90,7 +74,68 @@ describe( 'App', () => {
 
     let page10 = screen.getByText('10');
     userEvent.click(page10);
-    await waitFor( () => expect(history.location.pathname).toEqual('/page/10'))
+    () => expect(history.location.pathname).toEqual('/page/10');
+  })
 
+  it( 'should fetch a new word after clicking on the Title button', async () => {
+
+    history.push('/show-me-something-news')
+
+    render(<Router history={history} ><App /></Router>);
+    await waitFor( () => expect(wordAPI.getPhrase).toBeCalledTimes(1))
+
+    let title = screen.getByText('Show Me Something News');
+    userEvent.click(title);
+
+    await waitFor( () => expect(wordAPI.getPhrase).toBeCalledTimes(2))
+  });
+
+  it( 'should show the about overlay when `about` is clicked', async () => {
+
+    render(<Router history={history} ><App /></Router>);
+    await waitFor( () => expect(wordAPI.getPhrase).toBeCalledTimes(1))
+
+    let aboutBtn = screen.getByText('about');
+    userEvent.click(aboutBtn);
+
+    let aboutOverlay = screen.getByTestId('about-overlay');
+    expect(aboutOverlay.classList.contains('about-show')).toEqual(true);
+
+    userEvent.click(aboutOverlay);
+    expect(aboutOverlay.classList.contains('about-show')).toEqual(false);
+  });
+
+  it( 'should toggle the preferences div when the `adjust preferences` btn is clicked', async () => {
+
+    render(<Router history={history} ><App /></Router>);
+    await waitFor( () => expect(wordAPI.getPhrase).toBeCalledTimes(1))
+
+    let prefDiv = screen.getByTestId('preferences-select')
+    let prefBTN = screen.getByText('adjust preferences');
+
+    expect(prefDiv.classList.contains('hidden')).toEqual(true);
+    userEvent.click(prefBTN);
+    expect(prefDiv.classList.contains('hidden')).toEqual(false)
+    userEvent.click(prefBTN);
+    expect(prefDiv.classList.contains('hidden')).toEqual(true);
+
+  })
+
+  it( 'should call `getPhrase` with whatever number was selected', async () =>  {
+
+    render(<Router history={history} ><App /></Router>);
+    await waitFor( () => expect(wordAPI.getPhrase).toBeCalledTimes(1))
+
+    let prefBTN = screen.getByText('adjust preferences');
+    userEvent.click(prefBTN);
+
+    let select = screen.getByTestId(`select-numWords`)
+    userEvent.type(select, '1{enter}');
+
+    let title = screen.getByText('Show Me Something News')
+    userEvent.click(title)
+
+    await waitFor(() => expect(wordAPI.getPhrase).toBeCalledTimes(2))
+    expect(wordAPI.getPhrase).toBeCalledWith(1)
   })
 })

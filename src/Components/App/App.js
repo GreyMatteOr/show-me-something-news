@@ -31,6 +31,7 @@ class App extends Component {
     return (
       <div
         className={props.disp}
+        data-testid='about-overlay'
         onClick={ () => this.setState( {showAbout: !this.state.showAbout} ) }>
         <div className='about-holder'>
           <h4 className='about-text'>About Show Me Something News</h4>
@@ -59,6 +60,7 @@ class App extends Component {
         {displayText}
         {btnHTML}
         <select
+          data-testid={`select-${propName}`}
           name={propName}
           onChange={(e) => this.setState({[e.target.name]: e.target.value})}>
           {optionsHTML}
@@ -96,7 +98,7 @@ class App extends Component {
         </button>
         <h2>{`...about: "${this.state.query}`}"</h2>
         <section className='header-right'>
-          <div className={preferencesClass}>
+          <div className={preferencesClass} data-testid='preferences-select'>
             {this.createSelect('numWords', 'words per phrase', null, 1, 2, 3, 4, 5)}
           </div>
           <div id='header-right-btns'>
@@ -139,7 +141,7 @@ class App extends Component {
 
   PageSelect = (props) => {
     let optionsHTML = [];
-    while (optionsHTML.length < props.pageMax) {
+    while (optionsHTML.length < Math.min(props.pageMax, 40)) {
       let pageNum = optionsHTML.length + 1;
       optionsHTML.push(
         <NavLink
@@ -185,7 +187,7 @@ class App extends Component {
         <this.About disp={`about-overlay ${showAbout}`} />
         <main>
           {this.createSelect('mightSortBy', null, btnData, 'relevance', 'newest', 'oldest')}
-          <this.PageSelect pageMax={this.state.pageMax}/>
+          <this.PageSelect pageMax={this.state.pageMax} />
           <div className={this.state.loadingOverlayState} data-testid='pre-feed-load'>
             <img
               className='spin'

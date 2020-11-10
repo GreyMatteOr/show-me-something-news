@@ -59,6 +59,18 @@ main {
   align-items: center;
 }
 
+.page-selection {
+  display: flex;
+  flex-direction: row;
+  margin: 1em;
+  justify-content: space-between;
+}
+
+.active {
+  background-color: rgba(100, 20, 20, 1);
+  border-radius: .5em;
+}
+
 .about-overlay {
   top: 0;
   bottom: 0;

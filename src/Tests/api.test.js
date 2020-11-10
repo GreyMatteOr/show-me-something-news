@@ -64,31 +64,31 @@ describe( 'api helper functions', () => {
 
     it( 'should call `getRandomWord` at least once', async () => {
 
-      await wordAPI.getPhrase(1, 1);
+      await wordAPI.getPhrase(1);
       expect(wordAPI.getRandomWord).toBeCalled();
     });
 
     it( 'should return an array of words', async () => {
 
-      let test = await wordAPI.getPhrase(1, 1);
+      let test = await wordAPI.getPhrase(1);
       expect(test).toEqual(['fool']);
     });
 
     it( 'should work for any number of words', async () => {
 
-      let test = await wordAPI.getPhrase(1, 1);
+      let test = await wordAPI.getPhrase(1);
       expect(test).toEqual(['fool']);
 
-      test = await wordAPI.getPhrase(2, 2);
+      test = await wordAPI.getPhrase(2);
       expect(test).toEqual(['fool', 'fool']);
 
-      test = await wordAPI.getPhrase(3, 3);
+      test = await wordAPI.getPhrase(3);
       expect(test).toEqual(['fool', 'fool', 'fool']);
 
-      test = await wordAPI.getPhrase(4, 4);
+      test = await wordAPI.getPhrase(4);
       expect(test).toEqual(['fool', 'fool', 'fool', 'fool']);
 
-      test = await wordAPI.getPhrase(5, 5);
+      test = await wordAPI.getPhrase(5);
       expect(test).toEqual(['fool', 'fool', 'fool', 'fool', 'fool']);
 
     });
@@ -115,7 +115,7 @@ describe( 'api helper functions', () => {
       let correct = ['fool', 'barn', 'debug', 'loop', 'snup', 'cant'];
 
       for (let i = 0; i < 20; i++) {
-        let result = await wordAPI.getPhrase(5, 5);
+        let result = await wordAPI.getPhrase(5);
 
         let test = result.every( word => correct.includes( word));
         expect(test).toEqual(true);
