@@ -1,6 +1,7 @@
 html, body {
   height: 100vh;
-  background-color: grey;
+  background-color: #ada478;
+  overflow-y: auto;
 }
 
 body {

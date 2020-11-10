@@ -1,22 +1,56 @@
 header {
-  display: grid;
-  grid-template-rows: 1fr auto 1fr;
-  justify-items: center;
-  width: 100;
-  text-align:center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: #c88;
+
+  width: 95%;
+  height: 6em;
+  margin: .5em auto;
+  margin-top: 1.5em;
+
+  border-color: black;
+  border-radius: .5em;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: rgb(60, 50, 50) 1px 1px 5px 1px;
 }
 
 #title-btn {
-  grid-row: 1;
   text-align: center;
+  padding: 1em;
 }
 
-#show-preferences {
-  grid-row: 2;
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  height: 100%;
+  width: 25%;
+  font-size: 16px;
 }
 
-.search-preferences {
-  grid-row: 3;
+.preferences-select {
+  display: flex;
+  justify-content: space-between;
+
+  width: 11em;
+  margin: .75em;
+}
+
+.hr-btn {
+  margin: 1em;
+  margin-top: 0;
+  font-size: 16px;
+}
+
+#header-right-btns {
+  display: flex;
+  flex-direction: row;
 }
 
 main {
@@ -25,13 +59,57 @@ main {
   align-items: center;
 }
 
+.about-overlay {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;
+  text-align: center;
+
+  background-color: rgba(0, 0, 0, .75);
+  opacity: 0;
+
+  transition-property: opacity;
+  transition-duration: .8s;
+}
+
+.about-show {
+  z-index: 100;
+  opacity: 1;
+}
+
+.about-holder {
+  margin: auto;
+  margin-top: 3em;
+  width: 70%;
+  padding: 3em;
+
+  background-color: rgba(255, 200, 200, .9);
+  border-radius: 1em;
+}
+
+.about-text {
+  font-size: 20px;
+}
+
 button {
   background-color: rgba(150, 0, 0, 0.5);
-  border-radius: .5em;
-  transition-property: background-color;
-  transition-duration: .6s;
+  color: rgb(255, 200, 0);
+  text-shadow: 2px 3px 3px black;
+
   width: max-content;
   height: max-content;
+  border-width: 1px;
+  border-radius: .5em;
+
+  transition-property: background-color;
+  transition-duration: .6s;
+}
+
+button:hover {
+  background-color: rgba(205, 70, 70, 0.8);
 }
 
 select {
@@ -39,22 +117,27 @@ select {
   border-color: black;
   border-radius: .25em;
   width: max-content;
+  font-size: 16px;
 }
 
-button:hover {
-  background-color: rgba(185, 60, 60, 0.8);
+#select-btn {
+  font-size: 16px;
 }
 
-.shown {
+.shown, .on-load-spin {
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(50, 50, 50, .3);
+  background-color: rgba(50, 50, 50);
 
   display: flex;
   position: fixed;
   z-index: 100;
+}
+
+.shown {
+  background-color: rgba(50, 50, 50, .3);
 }
 
 .shown img {
