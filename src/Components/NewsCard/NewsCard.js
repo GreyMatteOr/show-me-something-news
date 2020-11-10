@@ -30,7 +30,7 @@ function NewsCard({ article } ) {
 
 
   return (
-    <Link to={article.web_url}
+    <a href={article.web_url}
       className='news-card'
       data-testid='news-card'>
       {makeImage()}
@@ -45,7 +45,7 @@ function NewsCard({ article } ) {
         </h4>
         <p data-testid='nc-summary'>{getBestSummary()}</p>
       </section>
-    </Link>
+    </a>
   )
 }
 
