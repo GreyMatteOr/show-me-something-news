@@ -62,7 +62,7 @@ describe( 'NewsFeed', () => {
       expect(mockSetAppState).toBeCalledWith( {loadingOverlayState: 'shown'} );
 
       expect(timesAPI.getArticles).toBeCalledTimes(1);
-      expect(timesAPI.getArticles).toBeCalledWith('debug', 0);
+      expect(timesAPI.getArticles).toBeCalledWith('debug', 0, undefined);
     });
 
     it( 'should render an error message if the fetch fails', async () => {
