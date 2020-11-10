@@ -140,7 +140,7 @@ select {
   background-color: rgba(50, 50, 50, .3);
 }
 
-.shown img {
+.shown img, .on-load-spin img {
   width: 5em;
   margin: auto;
   margin-top: 10%;

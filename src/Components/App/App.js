@@ -68,15 +68,14 @@ class App extends Component {
   }
 
   getNewPhrase = () => {
-    // wordAPI.getPhrase(this.state.numWords)
-    // .then( words => {
-    //   if (words === 'error') {
-    //     return this.setState( {isError: true, isLoading: false} )
-    //   }
-    //   this.setState( {query: words.join(' '), currentPage: 1, isLoading: false} )
-    // })
-    // .catch( () => this.setState( {isError: true, isLoading: false} ))
-    this.setState({query: 'Apple Banana Kiwi', currentPage: 1, isLoading: false})
+    wordAPI.getPhrase(this.state.numWords)
+    .then( words => {
+      if (words === 'error') {
+        return this.setState( {isError: true, isLoading: false} )
+      }
+      this.setState( {query: words.join(' '), currentPage: 1, isLoading: false} )
+    })
+    .catch( () => this.setState( {isError: true, isLoading: false} ))
   }
 
   setSort = () => {
@@ -195,7 +194,7 @@ class App extends Component {
           </div>
 
           <Route
-            exact path='/'
+            exactpath='/show-me-something-news'
             component={this.Home}
           />
 
