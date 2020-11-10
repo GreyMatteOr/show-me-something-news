@@ -82,16 +82,19 @@ class App extends Component {
           </h1>
         </button>
         <h2>{`...about: "${this.state.query}`}"</h2>
-        <section className='preferences'>
+        <section className='header-right'>
           <div className={preferencesClass}>
             {this.createSelect('numWords', 'words per phrase', null, 1, 2, 3, 4, 5)}
           </div>
-          <button
-            id='show-preferences'
-            onClick={ () => this.setState({ showPreferences: !this.state.showPreferences })}
-            >
-            adjust preferences
-          </button>
+          <div id='header-right-btns'>
+            <button
+              className='hr-btn'
+              onClick={ () => this.setState({ showPreferences: !this.state.showPreferences })}
+              >
+              adjust preferences
+            </button>
+            <button className='hr-btn' onClick={ () => this.setState( {showAbout: !this.state.showAbout} ) }>about</button>
+          </div>
         </section>
       </header>
     )
@@ -174,8 +177,6 @@ class App extends Component {
               alt='Loading Content'
             />
           </div>
-
-          <button onClick={ () => this.setState( {showAbout: !this.state.showAbout} ) }>about</button>
 
           <Route
             exact path='/'
