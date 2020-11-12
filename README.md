@@ -1,3 +1,5 @@
+# UPDATE: I have revoked the API-keys. If you wish to create your own API-Key at wordAPI, or like me to reactivate it for demonstration purposes, please contact me for further detail.
+
 # Show Me Something News
 ## A Project by [Matthew Lane](https://github.com/GreyMatteOr) built from scratch in under 5 days
 
